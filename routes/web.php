@@ -22,5 +22,5 @@ Route::middleware([
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('admin', [HomeController::class, 'index'])->name('admin.index');
+    Route::resource('items', ItemController::class)->names('admin.items');
 });
-Route::resource('items', ItemController::class)->names('admin.items');

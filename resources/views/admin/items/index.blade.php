@@ -3,24 +3,24 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Items</h1>
+<h1>Items</h1>
 @stop
 
 @section('content')
-    @livewire('items-component')
+@livewire('items-component')
 @stop
 
 @section('css')
-    {{-- sweetealert2 --}}
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+{{-- sweetealert2 --}}
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 @stop
 
 @section('js')
-    {{-- sweetalert2 --}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{{-- sweetalert2 --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script>
-        document.addEventListener('livewire:init', ()=>{
+<script>
+    document.addEventListener('livewire:init', ()=>{
             Livewire.on('close-modal', (idModal)=> {
                 $('#'+idModal).modal('hide');
             })
@@ -33,10 +33,16 @@
                     text: message,
                     icon: 'success',
                     showConfirmButton: false,
-                    timer: 2000
+                    timer: 3000
                 })
             });
         })
+
+        document.addEventListener('livewire:init', ()=>{
+        Livewire.on('open-modal', (idModal)=> {
+            $('#'+idModal).modal('show');
+        })
+    })
 
         document.addEventListener('livewire:init', ()=>{
             Livewire.on('delete', (e)=> {
@@ -59,5 +65,5 @@
             })
         })
 
-    </script>
+</script>
 @stop
