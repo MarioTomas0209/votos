@@ -120,24 +120,19 @@ class ItemsComponent extends Component
         try {
             $item = Item::findOrFail($id);
 
-            // Verificar si el item está siendo usado en la tabla comparisons
             if ($item->comparisons()->exists()) {
-                // Mostrar un mensaje indicando que el item no puede ser eliminado
                 $this->dispatch('alert', 'No se puede eliminar el item debido a restricciones de integridad.');
                 return;
             }
 
-            // Eliminar la imagen asociada si existe
             if ($item->image_url) {
                 Storage::disk('public')->delete($item->image_url);
             }
 
-            // Finalmente, eliminar el item
             $item->delete();
 
             $this->dispatch('alert', 'Item eliminado correctamente.');
         } catch (QueryException $e) {
-            // Capturar excepciones de integridad referencial (clave foránea)
             $this->dispatch('alert', 'No se puede eliminar el item debido a restricciones de integridad.');
         }
     }
