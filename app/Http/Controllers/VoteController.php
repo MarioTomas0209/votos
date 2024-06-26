@@ -20,7 +20,6 @@ class VoteController extends Controller
 
         if ($comparison) {
 
-            // Verificar si el usuario ya ha votado en esta comparación
             $existingVote = Vote::where('comparison_id', $request->comparison_id)
                 ->where('user_id', Auth::id())
                 ->first();

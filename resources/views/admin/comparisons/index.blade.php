@@ -3,11 +3,11 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-<h1>Artículos</h1>
+    <h1>Artículos de comparación</h1>
 @stop
 
 @section('content')
-    @livewire('items-component')
+    @livewire('items-comparisons-component')
 @stop
 
 @section('css')

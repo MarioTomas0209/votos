@@ -26,8 +26,9 @@
                             <td>{{ $item->name }}</td>
                             <td class="text-capitalize">{{ $item->type }}</td>
                             <td>
-                                <img src="{{ asset('storage/' . $item->image_url) }}" alt="{{ $item->name }}"
-                                    style="width: 4rem">
+
+                                <img src="{{ $item->image_url ? asset('storage/' . $item->image_url) : asset('no-image.png') }}" alt="{{ $item->name }}" style="width: 4rem">
+
                             </td>
                             <td>
                                 <a wire:click='edit({{ $item->id }})' class="pointer btn btn-warning btn-sm" title="Editar">
@@ -77,7 +78,7 @@
                             <label for="type">Tipo</label>
                             <select class="form-control @error('type') border-danger @enderror"" wire:model='type'>
                                 <option value="">Seleccione una opción</option>
-                                <option value=" bebida">Bebida</option>
+                                <option value="bebida">Bebida</option>
                                 <option value="comida">Comida</option>
                             </select>
                             @error('type')

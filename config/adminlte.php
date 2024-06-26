@@ -63,9 +63,9 @@ return [
     |
     */
 
-    'logo' => '',
+    'logo' => '<b>ADMIN</b>',
     'logo_img' => 'logo.webp',
-    'logo_img_class' => 'brand-image',
+    'logo_img_class' => 'brand-image img-thumbnail',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'Logo',
@@ -152,10 +152,10 @@ return [
     |
     */
 
-    'layout_topnav' => true,
+    'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => true,
+    'layout_fixed_sidebar' => true,
+    'layout_fixed_navbar' => null,
     'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
 
@@ -198,7 +198,7 @@ return [
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-dark-primary elevation-4',
     'classes_sidebar_nav' => '',
-    'classes_topnav' => 'navbar-white navbar-light',
+    'classes_topnav' => 'navbar-dark navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
 
@@ -324,13 +324,24 @@ return [
         [
             'text' => 'Items',
             'route' => 'admin.items.index',
-            'icon' => 'fa-fw fas fa-sitemap',
+            'icon' => 'fa-fw fas fa-cookie-bite',
         ],
-        // [
-        //     'text' => 'change_password',
-        //     'url' => 'admin/settings',
-        //     'icon' => 'fas fa-fw fa-lock',
-        // ],
+        [
+            'text' => 'Items Comparisons',
+            'route' => 'admin.comparisons.index',
+            'icon' => 'fa-fw fas fa-assistive-listening-systems',
+        ],
+        [
+            'text' => 'Votos',
+            'route' => 'admin.votes.index',
+            'icon' => 'fa-fw fas fa-poll',
+        ],
+        [
+            'text' => 'Ayuda',
+            'url' => 'https://mario.virsato.com/',
+            'icon' => 'fa-fw fas fa-external-link-alt',
+            'target' => '_blank',
+        ],
         // [
         //     'text' => 'multilevel',
         //     'icon' => 'fas fa-fw fa-share',

@@ -34,11 +34,11 @@
             <ul>
                 @foreach($comparisons as $comparison)
                 @php
-                $winnerItem = $comparison->votes_item1 >= $comparison->votes_item2 ? $comparison->item1 :
-                $comparison->item2;
-                $winnerVotes = $comparison->votes_item1 >= $comparison->votes_item2 ? $comparison->votes_item1 :
-                $comparison->votes_item2;
-                $winnerColor = $comparison->votes_item1 >= $comparison->votes_item2 ? 'text-green-500' : 'text-red-500';
+                    $winnerItem = $comparison->votes_item1 >= $comparison->votes_item2 ? $comparison->item1 :
+                    $comparison->item2;
+                    $winnerVotes = $comparison->votes_item1 >= $comparison->votes_item2 ? $comparison->votes_item1 :
+                    $comparison->votes_item2;
+                    $winnerColor = $comparison->votes_item1 >= $comparison->votes_item2 ? 'text-green-500' : 'text-red-500';
                 @endphp
                 <li class="mb-6">
                     <div class="flex items-center">
@@ -62,57 +62,54 @@
 
             <!-- Sección de Comparaciones -->
             @foreach($comparisons as $comparison)
-            <section class="mb-8">
-                <h2 class="text-3xl font-semibold text-center text-blue-600 mb-4">Comparación {{ $loop->iteration }}
-                </h2>
-                <div class="flex justify-around items-center">
-                    <div class="text-center">
-                        <img src="{{ asset('storage/' . $comparison->item1->image_url) }}"
-                            alt="{{ $comparison->item1->name }}" class="w-40 h-40 mx-auto mb-2 object-cover rounded-lg">
-                        <p class="text-xl font-bold">{{ $comparison->item1->name }}</p>
-                        <p class="text-lg text-green-500">{{ $comparison->votes_item1 }}%</p>
-                        @auth
-                        @php
-                        $userVote = $comparison->votes->where('user_id', Auth::id())->first();
-                        @endphp
-                        @if(!$userVote)
-                        <form action="{{ route('vote.store') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="comparison_id" value="{{ $comparison->id }}">
-                            <input type="hidden" name="item_id" value="{{ $comparison->item1->id }}">
-                            <button type="submit"
-                                class="bg-green-500 text-white py-1 px-4 rounded-md mt-2">Votar</button>
-                        </form>
-                        @elseif($userVote->item_id == $comparison->item1->id)
-                        <div class="bg-green-500 py-1 px-4 rounded-md">
-                            😍
+                <section class="mb-8">
+                    <h2 class="text-3xl font-semibold text-center text-blue-600 mb-4">Comparación {{ $loop->iteration }}</h2>
+                    <div class="flex justify-around items-center">
+                        <div class="text-center">
+                            <img src="{{ asset('storage/' . $comparison->item1->image_url) }}" alt="{{ $comparison->item1->name }}" class="w-40 h-40 mx-auto mb-2 object-cover rounded-lg">
+                            <p class="text-xl font-bold">{{ $comparison->item1->name }}</p>
+                            <p class="text-lg text-green-500">{{ $comparison->votes_item1 }}%</p>
+                            @auth
+                                @php
+                                    $userVote = $comparison->votes->where('user_id', Auth::id())->first();
+                                @endphp
+                                @if(!$userVote)
+                                    <form action="{{ route('vote.store') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="comparison_id" value="{{ $comparison->id }}">
+                                        <input type="hidden" name="item_id" value="{{ $comparison->item1->id }}">
+                                        <button type="submit"
+                                            class="bg-green-500 text-white py-1 px-4 rounded-md mt-2">Votar</button>
+                                    </form>
+                                @elseif($userVote->item_id == $comparison->item1->id)
+                                    <div class="bg-green-500 py-1 px-4 rounded-md">😍</div>
+                                @endif
+                            @endauth
                         </div>
-                        @endif
-                        @endauth
-                    </div>
-                    <p class="text-2xl font-bold">VS</p>
-                    <div class="text-center">
-                        <img src="{{ asset('storage/' . $comparison->item2->image_url) }}"
-                            alt="{{ $comparison->item2->name }}" class="w-40 h-40 mx-auto mb-2 object-cover rounded-lg">
-                        <p class="text-xl font-bold">{{ $comparison->item2->name }}</p>
-                        <p class="text-lg text-red-500">{{ $comparison->votes_item2 }}%</p>
-                        @auth
-                        @if(!$userVote)
-                        <form action="{{ route('vote.store') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="comparison_id" value="{{ $comparison->id }}">
-                            <input type="hidden" name="item_id" value="{{ $comparison->item2->id }}">
-                            <button type="submit" class="bg-red-500 text-white py-1 px-4 rounded-md mt-2">Votar</button>
-                        </form>
-                        @elseif($userVote->item_id == $comparison->item2->id)
-                        <div class="bg-green-500 py-1 px-4 rounded-md">
-                            🥰
+                        <p class="text-2xl font-bold">VS</p>
+                        <div class="text-center">
+                            <img src="{{ asset('storage/' . $comparison->item2->image_url) }}"
+                                alt="{{ $comparison->item2->name }}" class="w-40 h-40 mx-auto mb-2 object-cover rounded-lg">
+                            <p class="text-xl font-bold">{{ $comparison->item2->name }}</p>
+                            <p class="text-lg text-red-500">{{ $comparison->votes_item2 }}%</p>
+                            @auth
+                            @if(!$userVote)
+                            <form action="{{ route('vote.store') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="comparison_id" value="{{ $comparison->id }}">
+                                <input type="hidden" name="item_id" value="{{ $comparison->item2->id }}">
+                                <button type="submit" class="bg-red-500 text-white py-1 px-4 rounded-md mt-2">Votar</button>
+                            </form>
+                            @elseif($userVote->item_id == $comparison->item2->id)
+                            <div class="bg-green-500 py-1 px-4 rounded-md">
+                                🥰
+                            </div>
+                            @endif
+                            @endauth
                         </div>
-                        @endif
-                        @endauth
                     </div>
-                </div>
-            </section>
+                    <p class="text-sm text-gray-500 text-center mt-3">Publicado: {{ $comparison->created_at->diffForHumans() }}</p>
+                </section>
             @endforeach
         </main>
         @endauth
