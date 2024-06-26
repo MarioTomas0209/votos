@@ -41,7 +41,6 @@
                         {{ __('¿Olvidaste tu contraseña?') }}
                     </a>
                 @endif --}}
-                holas
 
                 <x-button class="ms-4">
                     {{ __('Ingresar') }}
