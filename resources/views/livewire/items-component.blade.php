@@ -11,7 +11,6 @@
             <div class="table-responsive">
                 <table class="text-center table table-bordered border-primary">
                     <thead>
-                        <th>ID</th>
                         <th>Nombre</th>
                         <th>Tipo</th>
                         <th><i class="fas fa-image"></i></th>
@@ -20,28 +19,31 @@
                     </thead>
 
                     <tbody>
-                        @foreach($items as $item)
-                        <tr>
-                            <td>{{ $item->id }}</td>
-                            <td>{{ $item->name }}</td>
-                            <td class="text-capitalize">{{ $item->type }}</td>
-                            <td>
+                        @forelse($items as $item)
+                            <tr>
+                                <td>{{ $item->name }}</td>
+                                <td class="text-capitalize">{{ $item->type }}</td>
+                                <td>
 
-                                <img src="{{ $item->image_url ? asset('storage/' . $item->image_url) : asset('no-image.png') }}" alt="{{ $item->name }}" style="width: 4rem">
+                                    <img src="{{ $item->image_url ? asset('storage/' . $item->image_url) : asset('no-image.png') }}" alt="{{ $item->name }}" style="width: 4rem">
 
-                            </td>
-                            <td>
-                                <a wire:click='edit({{ $item->id }})' class="pointer btn btn-warning btn-sm" title="Editar">
-                                    <i class="far fa-edit"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <a wire:click="$dispatch('delete',{id: {{ $item->id }}, eventName: 'destroyItem'})" class="pointer btn btn-danger btn-sm" title="Eliminar">
-                                    <i class="far fa-trash-alt"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        @endforeach
+                                </td>
+                                <td>
+                                    <a wire:click='edit({{ $item->id }})' class="pointer btn btn-warning btn-sm" title="Editar">
+                                        <i class="far fa-edit"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a wire:click="$dispatch('delete',{id: {{ $item->id }}, eventName: 'destroyItem'})" class="pointer btn btn-danger btn-sm" title="Eliminar">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr class="text-center">
+                                <td colspan="5">Sin registros</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

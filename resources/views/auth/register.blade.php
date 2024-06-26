@@ -1,8 +1,10 @@
 <x-guest-layout>
     <x-authentication-card>
         
-        <div>
-            <img src="{{ asset('logo.webp') }}" alt="logo" class="w-24">
+        <div class="flex justify-center">
+            <a href="{{ url('/') }}">
+                <img src="{{ asset('logo.webp') }}" alt="logo" class="w-72">
+            </a>
         </div>
 
         <x-validation-errors class="mb-4" />

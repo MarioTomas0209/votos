@@ -18,7 +18,6 @@
                     <table class="text-center table table-bordered border-primary">
                         <thead>
                             <tr>
-                                <th style="width: 10px">#</th>
                                 <th>Nombre</th>
                                 <th>Item</th>
                                 <th><i class="fas fa-image"></i></th>
@@ -28,7 +27,6 @@
                         <tbody>
                             @foreach($votes as $vote)
                                 <tr>
-                                    <td>{{ $vote->id }}</td>
                                     <td>{{ $vote->user->name }}</td>
                                     <td>{{ $vote->item->name }}</td>
                                     <td>
@@ -59,14 +57,12 @@
                     <table class="text-center table table-bordered border-primary">
                         <thead>
                             <tr>
-                                <th style="width: 10px">#</th>
                                 <th>Nombre</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($usersWhoDidNotVote as $user)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $user->name }}</td>
                                 </tr>
                             @endforeach

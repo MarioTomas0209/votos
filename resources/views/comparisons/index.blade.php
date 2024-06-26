@@ -2,59 +2,73 @@
 
     <!-- Mostrar mensajes de éxito o error -->
     @if(session('success'))
-    <div class="bg-green-500 py-1 px-4 text-center text-white">
-        {{ session('success') }}
-    </div>
+        <div class="bg-green-500 py-1 px-4 text-center text-white">
+            {{ session('success') }}
+        </div>
     @elseif(session('info'))
-    <div class="bg-blue-500 py-1 px-4 text-center text-white">
-        {{ session('info') }}
-    </div>
+        <div class="bg-blue-500 py-1 px-4 text-center text-white">
+            {{ session('info') }}
+        </div>
     @elseif(session('error'))
-    <div class="bg-red-500 py-1 px-4 text-center text-white">
-        {{ session('error') }}
-    </div>
+        <div class="bg-red-500 py-1 px-4 text-center text-white">
+            {{ session('error') }}
+        </div>
     @endif
+    
     <div class="container mx-auto flex flex-col lg:flex-row py-8">
-
-        <!-- Panel Lateral -->
-        <aside
-            class="flex-shrink-0 w-full lg:w-1/4 bg-white p-6 rounded-lg shadow-lg mb-8 lg:mb-0 lg:sticky lg:top-8 lg:self-start"
-            style="height: min-content;">
-            @auth
+    <!-- Panel Lateral -->
+    <aside class="flex-shrink-0 w-full  lg:w-1/4 bg-white p-6 shadow-lg mb-8 lg:mb-0 lg:sticky lg:top-8 lg:self-start" style="height: min-content;">
+        @auth
             <div class="text-center mb-6">
                 <h1 class="text-3xl lg:text-3xl font-bold text-blue-600">¡Hola, {{ auth()->user()->name }}!</h1>
                 <p class="text-lg lg:text-xl mt-2">¡Vota por tu opción favorita y ayuda a decidir!</p>
             </div>
-            @else
+        @else
             <div class="text-center mb-6">
                 <h2 class="text-2xl font-semibold text-blue-600">Menú de la semana</h2>
             </div>
-            @endauth
+        @endauth
 
-            <ul>
-                @foreach($comparisons as $comparison)
+        <ul>
+            @foreach($comparisons as $comparison)
                 @php
-                    $winnerItem = $comparison->votes_item1 >= $comparison->votes_item2 ? $comparison->item1 :
-                    $comparison->item2;
-                    $winnerVotes = $comparison->votes_item1 >= $comparison->votes_item2 ? $comparison->votes_item1 :
-                    $comparison->votes_item2;
-                    $winnerColor = $comparison->votes_item1 >= $comparison->votes_item2 ? 'text-green-500' : 'text-red-500';
+                    $winnerItem = null;
+                    $winnerVotes = null;
+                    $winnerColor = '';
+        
+                    if ($comparison->votes_item1 > $comparison->votes_item2) {
+                        $winnerItem = $comparison->item1;
+                        $winnerVotes = $comparison->votes_item1;
+                        $winnerColor = 'text-green-500';
+                    } elseif ($comparison->votes_item2 > $comparison->votes_item1) {
+                        $winnerItem = $comparison->item2;
+                        $winnerVotes = $comparison->votes_item2;
+                        $winnerColor = 'text-red-500';
+                    }
                 @endphp
-                <li class="mb-6">
-                    <div class="flex items-center">
-                        <img src="{{ asset('storage/' . $winnerItem->image_url) }}" alt="{{ $winnerItem->name }}"
-                            class="w-16 h-16 mr-4 rounded-full object-cover">
-                        <div>
-                            <p class="text-xl font-bold">{{ $winnerItem->name }}</p>
-                            @auth
-                            <p class="text-lg {{ $winnerColor }}">{{ $winnerVotes }}%</p>
-                            @endauth
+        
+                @if ($winnerItem)
+                    <li class="mb-6">
+                        <div class="flex items-center">
+                            <img src="{{ asset('storage/' . $winnerItem->image_url) }}" alt="{{ $winnerItem->name }}"
+                                class="w-16 h-16 mr-4 rounded-full object-cover">
+                            <div>
+                                <p class="text-xl font-bold">{{ $winnerItem->name }}</p>
+                                @auth
+                                    <p class="text-lg {{ $winnerColor }}">{{ $winnerVotes }}%</p>
+                                @endauth
+                            </div>
                         </div>
-                    </div>
-                </li>
-                @endforeach
-            </ul>
-        </aside>
+                    </li>
+                @else
+                    <p class="text-center text-gray-500 text-sm">Sin menú</p>
+                @endif
+            
+            @endforeach
+        </ul>
+        
+    </aside>
+       
 
         @auth
         <!-- Contenido Principal -->

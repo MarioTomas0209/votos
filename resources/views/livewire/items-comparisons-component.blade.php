@@ -12,7 +12,6 @@
             <div class="table-responsive">
                 <table class="text-center table table-bordered border-primary">
                     <thead>
-                        <th>ID</th>
                         <th>Item 1</th>
                         <th>Item 2</th>
                         <th>Votos item 1</th>
@@ -21,46 +20,42 @@
                     </thead>
 
                     <tbody>
-                        @foreach($comparisons as $comparison)
-                        @php
-                        $item1Wins = $comparison->votes_item1 > $comparison->votes_item2;
-                        @endphp
-                        <tr>
-                            <td>{{ $comparison->id }}</td>
-                            <td>
-                                <span class="badge {{ $item1Wins ? 'badge-success' : 'badge-danger' }}">
-                                    {{ $comparison->item1 ? $comparison->item1->name : 'N/A' }}
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge {{ !$item1Wins ? 'badge-success' : 'badge-danger' }}">
-                                    {{ $comparison->item2 ? $comparison->item2->name : 'N/A' }}
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge {{ $item1Wins ? 'badge-success' : 'badge-danger' }}">
-                                    {{ $comparison->votes_item1 }}%
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge {{ !$item1Wins ? 'badge-success' : 'badge-danger' }}">
-                                    {{ $comparison->votes_item2 }}%
-                                </span>
-                            </td>
-                            {{-- <td>
-                                imagen
-                                <img src="{{ $item->image_url ? asset('storage/' . $item->image_url) : asset('no-image.png') }}"
-                                    alt="{{ $item->name }}" style="width: 4rem">
-
-                            </td> --}}
-                           
-                            <td>
-                                <a wire:click="$dispatch('delete',{id: {{ $comparison->id }}, eventName: 'destroyComparison'})" class="pointer btn btn-danger btn-sm" title="Eliminar">
-                                    <i class="far fa-trash-alt"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        @endforeach
+                        @forelse($comparisons as $comparison)
+                            @php
+                                $item1Wins = $comparison->votes_item1 > $comparison->votes_item2;
+                            @endphp
+                            <tr>
+                                <td>
+                                    <span class="badge {{ $item1Wins ? 'badge-success' : 'badge-danger' }}">
+                                        {{ $comparison->item1 ? $comparison->item1->name : 'N/A' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge {{ !$item1Wins ? 'badge-success' : 'badge-danger' }}">
+                                        {{ $comparison->item2 ? $comparison->item2->name : 'N/A' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge {{ $item1Wins ? 'badge-success' : 'badge-danger' }}">
+                                        {{ $comparison->votes_item1 }}%
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge {{ !$item1Wins ? 'badge-success' : 'badge-danger' }}">
+                                        {{ $comparison->votes_item2 }}%
+                                    </span>
+                                </td>
+                                <td>
+                                    <a wire:click="$dispatch('delete',{id: {{ $comparison->id }}, eventName: 'destroyComparison'})" class="pointer btn btn-danger btn-sm" title="Eliminar">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr class="text-center">
+                                <td colspan="5">Sin registros</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
