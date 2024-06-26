@@ -2,7 +2,9 @@
     <x-authentication-card>
 
         <div>
-            <img src="{{ asset('logo.webp') }}" alt="logo" class="w-24">
+            <a href="{{ url('/') }}">
+                <img src="{{ asset('logo.webp') }}" alt="logo" class="w-24">
+            </a>
         </div>
 
         <x-validation-errors class="mb-4" />
@@ -34,13 +36,11 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
+                {{-- @if (Route::has('password.request'))
                     <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
                         {{ __('¿Olvidaste tu contraseña?') }}
                     </a>
-                @endif
-
-                {{-- <button type="submit" class="bg-red-500 hover:bg-red-600 font-bold text-white py-2 px-4 rounded-md w-full lg:w-auto lg:inline-block text-center" style="width: 90%;">Ingresar</button> --}}
+                @endif --}}
 
                 <x-button class="ms-4">
                     {{ __('Ingresar') }}
