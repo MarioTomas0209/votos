@@ -30,7 +30,7 @@
         @endauth
 
         <ul>
-            @foreach($comparisons as $comparison)
+            @forelse($comparisons as $comparison)
                 @php
                     $winnerItem = null;
                     $winnerVotes = null;
@@ -63,8 +63,10 @@
                 @else
                     <p class="text-center text-gray-500 text-sm">Sin menú</p>
                 @endif
-            
-            @endforeach
+            @empty
+                    <p class="text-center text-gray-500 text-sm">Sin menú</p>
+                
+            @endforelse
         </ul>
         
     </aside>
