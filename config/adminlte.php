@@ -322,6 +322,11 @@ return [
         ],
         ['header' => 'Administrador'],
         [
+            'text' => 'Users',
+            'route' => 'admin.users.index',
+            'icon' => 'fa-fw fas fa-users',
+        ],
+        [
             'text' => 'Items',
             'route' => 'admin.items.index',
             'icon' => 'fa-fw fas fa-cookie-bite',

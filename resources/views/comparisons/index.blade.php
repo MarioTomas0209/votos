@@ -16,63 +16,63 @@
     @endif
     
     <div class="container mx-auto flex flex-col lg:flex-row py-8">
-    <!-- Panel Lateral -->
-    <aside class="flex-shrink-0 w-full  lg:w-1/4 bg-white p-6 shadow-lg mb-8 lg:mb-0 lg:sticky lg:top-8 lg:self-start" style="height: min-content;">
-        @auth
-            <div class="text-center mb-6">
-                <h1 class="text-3xl lg:text-3xl font-bold text-blue-600">¡Hola, {{ auth()->user()->name }}!</h1>
-                <p class="text-lg lg:text-xl mt-2">¡Vota por tu opción favorita y ayuda a decidir!</p>
-            </div>
-        @else
-            <div class="text-center mb-6">
-                <h2 class="text-2xl font-semibold text-blue-600">Menú de la semana</h2>
-            </div>
-        @endauth
+        <!-- Panel Lateral -->
+        <aside class="flex-shrink-0 w-full  lg:w-1/4 bg-white p-6 shadow-lg mb-8 lg:mb-0 lg:sticky lg:top-8 lg:self-start" style="height: min-content;">
+            @auth
+                <div class="text-center mb-6">
+                    <h1 class="text-3xl lg:text-3xl font-bold text-blue-600">¡Hola, {{ auth()->user()->name }}!</h1>
+                    <p class="text-lg lg:text-xl mt-2">¡Vota por tu opción favorita y ayuda a decidir!</p>
+                </div>
+            @else
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl font-semibold text-blue-600">Menú de la semana</h2>
+                </div>
+            @endauth
 
-        <ul>
-            @forelse($comparisons as $comparison)
-                @php
-                    $winnerItem = null;
-                    $winnerVotes = null;
-                    $winnerColor = '';
-        
-                    if ($comparison->votes_item1 > $comparison->votes_item2) {
-                        $winnerItem = $comparison->item1;
-                        $winnerVotes = $comparison->votes_item1;
-                        $winnerColor = 'text-green-500';
-                    } elseif ($comparison->votes_item2 > $comparison->votes_item1) {
-                        $winnerItem = $comparison->item2;
-                        $winnerVotes = $comparison->votes_item2;
-                        $winnerColor = 'text-red-500';
-                    }
-                @endphp
-        
-                @if ($winnerItem)
-                    <li class="mb-6">
-                        <div class="flex items-center">
-                            <img src="{{ asset('storage/' . $winnerItem->image_url) }}" alt="{{ $winnerItem->name }}"
-                                class="w-16 h-16 mr-4 rounded-full object-cover">
-                            <div>
-                                <p class="text-xl font-bold">{{ $winnerItem->name }}</p>
-                                @auth
-                                    <p class="text-lg {{ $winnerColor }}">{{ $winnerVotes }}%</p>
-                                @endauth
+            <ul>
+                @forelse($comparisons as $comparison)
+                    @php
+                        $winnerItem = null;
+                        $winnerVotes = null;
+                        $winnerColor = '';
+            
+                        if ($comparison->votes_item1 > $comparison->votes_item2) {
+                            $winnerItem = $comparison->item1;
+                            $winnerVotes = $comparison->votes_item1;
+                            $winnerColor = 'text-green-500';
+                        } elseif ($comparison->votes_item2 > $comparison->votes_item1) {
+                            $winnerItem = $comparison->item2;
+                            $winnerVotes = $comparison->votes_item2;
+                            $winnerColor = 'text-red-500';
+                        }
+                    @endphp
+            
+                    @if ($winnerItem)
+                        <li class="mb-6">
+                            <div class="flex items-center">
+                                <img src="{{ asset('storage/' . $winnerItem->image_url) }}" alt="{{ $winnerItem->name }}"
+                                    class="w-16 h-16 mr-4 rounded-full object-cover">
+                                <div>
+                                    <p class="text-xl font-bold">{{ $winnerItem->name }}</p>
+                                    @auth
+                                        <p class="text-lg {{ $winnerColor }}">{{ $winnerVotes }}%</p>
+                                    @endauth
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                @else
-                    <p class="text-center text-gray-500 text-sm">Sin menú</p>
-                @endif
-            @empty
-                    <p class="text-center text-gray-500 text-sm">Sin menú</p>
-                
-            @endforelse
-        </ul>
-        
-    </aside>
+                        </li>
+                    @else
+                        <p class="text-center text-gray-500 text-sm">Sin menú</p>
+                    @endif
+                @empty
+                        <p class="text-center text-gray-500 text-sm">Sin menú</p>
+                    
+                @endforelse
+            </ul>
+            
+        </aside>
        
 
-        @auth
+        
         <!-- Contenido Principal -->
         <main class="flex-grow w-full lg:ml-8 overflow-y-auto">
 
@@ -109,18 +109,18 @@
                             <p class="text-xl font-bold">{{ $comparison->item2->name }}</p>
                             <p class="text-lg text-red-500">{{ $comparison->votes_item2 }}%</p>
                             @auth
-                            @if(!$userVote)
-                            <form action="{{ route('vote.store') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="comparison_id" value="{{ $comparison->id }}">
-                                <input type="hidden" name="item_id" value="{{ $comparison->item2->id }}">
-                                <button type="submit" class="bg-red-500 text-white py-1 px-4 rounded-md mt-2">Votar</button>
-                            </form>
-                            @elseif($userVote->item_id == $comparison->item2->id)
-                            <div class="bg-green-500 py-1 px-4 rounded-md">
-                                🥰
-                            </div>
-                            @endif
+                                @if(!$userVote)
+                                    <form action="{{ route('vote.store') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="comparison_id" value="{{ $comparison->id }}">
+                                        <input type="hidden" name="item_id" value="{{ $comparison->item2->id }}">
+                                        <button type="submit" class="bg-red-500 text-white py-1 px-4 rounded-md mt-2">Votar</button>
+                                    </form>
+                                @elseif($userVote->item_id == $comparison->item2->id)
+                                    <div class="bg-green-500 py-1 px-4 rounded-md">
+                                        🥰
+                                    </div>
+                                @endif
                             @endauth
                         </div>
                     </div>
@@ -128,7 +128,7 @@
                 </section>
             @endforeach
         </main>
-        @endauth
+        
     </div>
 
 
